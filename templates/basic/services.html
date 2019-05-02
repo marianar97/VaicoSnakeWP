@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Servicios</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %} ">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css ">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/ionicons/css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+
+</head>
+
+<body>
+
+  <header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">Vaico</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
+          aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample05">
+          <ul class="navbar-nav mr-auto pl-lg-5 pl-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="" id="dropdown04" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Servicios</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <a class="dropdown-item" href="">Detección de Actividades</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../contact">Contacto</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto cta-btn">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                VAICO
+              </a>
+            </li>
+          </ul> 
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- END header -->
+
+
+  <!-- PAGE CONTENT-->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+
+        <p> Puedes subir una imagen desde tu computadora </p>
+
+        <input type="file" onchange="previewFile()"><br>
+        <img src="" height="200">
+
+        <img id="photo" src="{% static 'img/current.jpeg' %}"
+          width="480" height="400" alt="Your photo">
+
+      </div>
+      <div class="col-md-6">
+
+        <p> Imagen resultado </p>
+
+        <button type="button" onclick="sendImage()">Enviar!</button>
+        
+        <img id="returned_photo" src="{% static 'img/output.jpeg' %}"
+          width="480" height="400" alt="Your photo">
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <script type="text/javascript" src="jscript/graph.js"></script>
+  <script src="./js/photo.js"></script>
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          <p class="copyright">Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+            <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
+        <div class="col-md-3">
+          <ul class="list-unstyled footer-link">
+            <li class="d-flex"><span class="mr-3">A:</span><span class="text-black">EAFIT Medellin</span></li>
+            <li class="d-flex"><span class="mr-3">T:</span><span class="text-black">+034 494 22 90</span></li>
+            <li class="d-flex"><span class="mr-3">E:</span><span class="text-black">vaico@vaicoworks.com</span></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h3>Atajos</h3>
+          <ul class="list-unstyled footer-link">
+            <li><a href="#">Acerca</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Prueba!</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h3>Social</h3>
+          <ul class="list-unstyled footer-link d-flex footer-social">
+            <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
+            <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
+            <li><a href="#" class="p-2"><span class="fa fa-linkedin"></span></a></li>
+            <li><a href="#" class="p-2"><span class="fa fa-instagram"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- END footer -->
+
+  <!-- loader -->
+  <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214" /></svg></div>
+
+
+      <script src = "{%static 'js/bootstrap.min.js' %}"></script>
+    <script src = "{%static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src = "{%static 'js/popper.min.js' %}"></script>
+    <script src = "{%static 'js/owl.carousel.min.js' %}"></script>
+    <script src = "{%static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src = "{%static 'js/main.js' %}"></script>
+</body>
+
+</html>

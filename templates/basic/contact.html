@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Contact</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css ">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+
+    <!--
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    -->
+    <!-- Theme Style -->
+  </head>
+  <body>
+    
+    <header role="banner">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">Vaico</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarsExample05">
+            <ul class="navbar-nav mr-auto pl-lg-5 pl-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="">Contacto</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto cta-btn">
+              <li class="nav-item">
+                <a class="nav-link" href="../../login">
+                    VAICO
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+    
+    <section class="home-slider  inner-page owl-carousel">
+      <div class="slider-item" style="background-image: url('../../static/img/webPage/slider-1.jpg');">
+        
+        <div class="container">
+          <div class="row slider-text align-items-center justify-content-center text-center">
+            <div class="col-md-7 col-sm-12 element-animate">
+              <h1>Contáctanos</h1>
+              <p>Si deseas aseoria, sientete libre de escribirnos en el formato presentado a continuacion</p>
+              <p><a href="#" class="btn btn-primary">Registrate!</a></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </section>
+    <!-- END slider -->
+    
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <form action="#" method="post">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label for="fname">Nombre</label>
+                  <input type="text" class="form-control form-control-lg" id="fname">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="lname">Apellidos</label>
+                  <input type="text" class="form-control form-control-lg" id="lname">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label for="email">Correo</label>
+                  <input type="email" id="email" class="form-control form-control-lg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label for="message">Escribe tu mensaje</label>
+                  <textarea name="message" id="message" class="form-control form-control-lg" cols="30" rows="8"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="submit" value="Enviar Mensaje" class="btn btn-primary btn-lg btn-block">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
+            <h5 class="text-uppercase mb-3">Direccion</h5>
+            <p class="mb-5">EAFIT <br> Medellín </p>
+            
+            <h5 class="text-uppercase mb-3">Email Us At</h5>
+            <p class="mb-5"><a href="mailto:info@yourdomain.com">vaicoworks@vaico.com</a></p>
+            
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </div>
+          <div class="col-md-3">
+            <ul class="list-unstyled footer-link">
+              <li class="d-flex"><span class="mr-3">A:</span><span class="text-black">EAFIT Medellin</span></li>
+              <li class="d-flex"><span class="mr-3">T:</span><span class="text-black">+034 494 22 90</span></li>
+              <li class="d-flex"><span class="mr-3">E:</span><span class="text-black">vaico@vaicoworks.com</span></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3>Atajos</h3>
+            <ul class="list-unstyled footer-link">
+              <li><a href="#">Acerca</a></li>
+              <li><a href="#">Servicios</a></li>
+              <li><a href="#">Prueba!</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3>Social</h3>
+            <ul class="list-unstyled footer-link d-flex footer-social">
+              <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
+              <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
+              <li><a href="#" class="p-2"><span class="fa fa-linkedin"></span></a></li>
+              <li><a href="#" class="p-2"><span class="fa fa-instagram"></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- END footer -->
+
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+
+    <script src = "{%static 'js/bootstrap.min.js' %}"></script>
+    <script src = "{%static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src = "{%static 'js/popper.min.js' %}"></script>
+    <script src = "{%static 'js/owl.carousel.min.js' %}"></script>
+    <script src = "{%static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src = "{%static 'js/main.js' %}"></script>
+
+  </body>
+</html>
