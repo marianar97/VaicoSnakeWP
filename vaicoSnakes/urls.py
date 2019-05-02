@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from charts import views as charts_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', local_views.home, name='home'),

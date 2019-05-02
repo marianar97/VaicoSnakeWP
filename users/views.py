@@ -3,6 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+import asyncio
+import time
+from users.tasks import frames
+from charts.models import Result
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -24,7 +29,11 @@ def feed(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-    return render(request, 'users/feed.html', context)
+        logged_in_user_posts = Result.objects.filter(user=request.user)
+        return render(request, 'charts/posts.html', {'posts': logged_in_user_posts})
+    else:
+        return render(request, 'users/feed.html')
+
 
 @login_required
 def logout_view(request):

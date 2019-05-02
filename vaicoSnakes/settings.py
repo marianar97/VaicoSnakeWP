@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #local apps
+    'charts',
     'users',
     'rest_framework',
-    'djcelery',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +97,7 @@ DATABASES = {
    }
 }
 
+CELERY_BROKER_URL = 'amqp://localhost'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
