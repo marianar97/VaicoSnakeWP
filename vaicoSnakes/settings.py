@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'charts',
     'users',
     'rest_framework',
+    'djcelery',
+    'celery',
 ]
 
 MIDDLEWARE = [
