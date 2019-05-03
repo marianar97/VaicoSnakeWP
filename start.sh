@@ -6,7 +6,7 @@ cd $PROJECT_ROOT
 
 
 echo "Collecting and compiling statics"
-pushd DemeterTracker
+pushd vaicoSnakes
 python manage.py collectstatic --noinput
 echo "Making migrations"
 python manage.py makemigrations
@@ -16,7 +16,7 @@ popd
 
 # Difference from article
 # CD to project as per comment above
-cd DemeterTracker
-exec gunicorn DemeterTracker.wsgi:application \
+cd vaicoSnakes
+exec gunicorn vaicoSnakes.wsgi:application \
      --bind 0.0.0.0:8000 \
          --workers 3
