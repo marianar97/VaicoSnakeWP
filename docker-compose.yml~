@@ -1,0 +1,37 @@
+version: '2'
+services:
+
+  django:
+    container_name: demeter-django
+    build:
+      context: .
+    networks:
+      - demeter-django-nginx
+    volumes:
+      - demeter-django-static:/usr/src/app/DemeterTracker/static
+    ports:
+      - 8000:8000
+
+  nginx:
+    container_name: demeter-nginx
+    build:
+      context: ./nginx
+      dockerfile: nginx.dockerfile
+    networks:
+      - demeter-django-nginx
+    volumes:
+      - demeter-django-static:/usr/src/app/static
+      - demeter-nginx-cert:/etc/ssl/certs:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - django
+
+volumes:
+  demeter-django-static:
+  demeter-nginx-cert:
+      
+networks:
+  demeter-django-nginx:
+    driver: bridge
