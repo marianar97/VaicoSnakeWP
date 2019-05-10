@@ -5,7 +5,7 @@ from tensorflow.python.keras.optimizers import RMSprop
 from tensorflow.python.keras.models import Model
 from tensorflow.python.keras.layers import Dense, Input, Dropout, LSTM, Activation, CuDNNLSTM, CuDNNGRU, GRU, GlobalMaxPool1D, BatchNormalization, Flatten
 
-from utilities import read , parse_Y
+from users.utilities import read , parse_Y
 
 class RNNModel():
     
@@ -17,8 +17,8 @@ class RNNModel():
     
         _input = Input(input_shape)
 
-        X = CuDNNGRU(110 , return_sequences=True)(_input)
-        X = CuDNNGRU(110 , return_sequences=False)(X)
+        X = GRU(110 , return_sequences=True)(_input)
+        X = GRU(110 , return_sequences=False)(X)
         X = Dense(13)(X)
         X = Activation('softmax')(X)
         

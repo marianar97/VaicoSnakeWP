@@ -4,6 +4,7 @@ import numpy as np
 
 def tracker(frames, bboxes):
     # Create MultiTracker object
+    print(len(frames), len(bboxes))
     multiTracker = cv2.MultiTracker_create()
 
     # Initialize MultiTracker

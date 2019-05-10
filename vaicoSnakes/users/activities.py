@@ -1,16 +1,20 @@
-from rnn import RNNModel
-from cnn import CNNModel
+from users.rnn import RNNModel
+from users.cnn import CNNModel
 import numpy as np
+import os
 
 class Activities:
 
     #Define modelo RNN para actividad y CNN para caracteristicas (inicialmente propuesto)
-    def __init__(self, input_shape, weight_path = 'model.h5'):
+    def __init__(self, input_shape, weight_path = 'rnn.h5'):
 
         self.rnn_model = RNNModel()
         self.rnn_model.set_model(input_shape)
+        weight_path = os.path.dirname(__file__)
+        weight_path = os.path.join(weight_path, 'rnn.h5')
+        print('bef')
         self.rnn_model.set_weights(weight_path)
-        
+        print('af')
         self.cnn_model = CNNModel()
     
     #Establecer una RNN, o modelo que reciba los mismos parametros que el metodo predict_rnn y que siga la misma signatura de metodos
