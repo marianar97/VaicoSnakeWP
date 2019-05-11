@@ -1,0 +1,177 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0001_initial.py	../vaicoSnakes/charts/migrations/0001_initial.py	1;"	kind:file	line:1
+0001_initial.py	../vaicoSnakes/users/migrations/0001_initial.py	1;"	kind:file	line:1
+0002_profile_biography.py	../vaicoSnakes/users/migrations/0002_profile_biography.py	1;"	kind:file	line:1
+0003_remove_profile_biography.py	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	1;"	kind:file	line:1
+ALLOWED_HOSTS	../vaicoSnakes/vaicoSnakes/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:33
+AUTH_PASSWORD_VALIDATORS	../vaicoSnakes/vaicoSnakes/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:112
+Activities	../vaicoSnakes/users/activities.py	/^class Activities:$/;"	kind:class	line:6
+BASE_DIR	../vaicoSnakes/vaicoSnakes/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+CELERY_BROKER_URL	../vaicoSnakes/vaicoSnakes/settings.py	/^CELERY_BROKER_URL = 'amqp:\/\/localhost'$/;"	kind:variable	line:107
+CNNModel	../vaicoSnakes/users/cnn.py	/^class CNNModel:$/;"	kind:class	line:5
+CSRF_COOKIE_SECURE	../vaicoSnakes/vaicoSnakes/settings.py	/^CSRF_COOKIE_SECURE = False$/;"	kind:variable	line:28
+ChartData	../vaicoSnakes/charts/views.py	/^class ChartData(APIView):$/;"	kind:class	line:18
+ChartsConfig	../vaicoSnakes/charts/apps.py	/^class ChartsConfig(AppConfig):$/;"	kind:class	line:4
+DATABASES	../vaicoSnakes/vaicoSnakes/settings.py	/^DATABASES = {$/;"	kind:variable	line:100
+DEBUG	../vaicoSnakes/vaicoSnakes/settings.py	/^DEBUG = True$/;"	kind:variable	line:31
+INSTALLED_APPS	../vaicoSnakes/vaicoSnakes/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:38
+LANGUAGE_CODE	../vaicoSnakes/vaicoSnakes/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:131
+LOGIN_URL	../vaicoSnakes/vaicoSnakes/settings.py	/^LOGIN_URL = 'login'$/;"	kind:variable	line:153
+MEDIA_ROOT	../vaicoSnakes/vaicoSnakes/settings.py	/^MEDIA_ROOT = os.path.join(BASE_DIR, "media")$/;"	kind:variable	line:150
+MEDIA_URL	../vaicoSnakes/vaicoSnakes/settings.py	/^MEDIA_URL = '\/media\/'$/;"	kind:variable	line:151
+MIDDLEWARE	../vaicoSnakes/vaicoSnakes/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:55
+Migration	../vaicoSnakes/charts/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../vaicoSnakes/users/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:8
+Migration	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:6
+Migration	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:6
+Profile	../vaicoSnakes/users/models.py	/^class Profile(models.Model):$/;"	kind:class	line:4
+RNNModel	../vaicoSnakes/users/rnn.py	/^class RNNModel():$/;"	kind:class	line:10
+ROOT_URLCONF	../vaicoSnakes/vaicoSnakes/settings.py	/^ROOT_URLCONF = 'vaicoSnakes.urls'$/;"	kind:variable	line:65
+Result	../vaicoSnakes/charts/models.py	/^class Result(models.Model):$/;"	kind:class	line:6
+SECRET_KEY	../vaicoSnakes/vaicoSnakes/settings.py	/^SECRET_KEY = '&yab4)v6h)p&$*c_mb0c06#sow2lwo_hl-k!k71wl2w1ban59x'$/;"	kind:variable	line:23
+SECURE_PROXY_SSL_HEADER	../vaicoSnakes/vaicoSnakes/settings.py	/^SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')$/;"	kind:variable	line:25
+SECURE_SSL_REDIRECT	../vaicoSnakes/vaicoSnakes/settings.py	/^SECURE_SSL_REDIRECT = False$/;"	kind:variable	line:26
+SESSION_COOKIE_SECURE	../vaicoSnakes/vaicoSnakes/settings.py	/^SESSION_COOKIE_SECURE = False$/;"	kind:variable	line:27
+STATICFILES_DIRS	../vaicoSnakes/vaicoSnakes/settings.py	/^STATICFILES_DIRS = (os.path.join(BASE_DIR, "static_files"), )$/;"	kind:variable	line:148
+STATIC_ROOT	../vaicoSnakes/vaicoSnakes/settings.py	/^STATIC_ROOT = os.path.join(BASE_DIR, "static")$/;"	kind:variable	line:147
+STATIC_URL	../vaicoSnakes/vaicoSnakes/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:146
+TEMPLATES	../vaicoSnakes/vaicoSnakes/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:67
+TIME_ZONE	../vaicoSnakes/vaicoSnakes/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:133
+USE_I18N	../vaicoSnakes/vaicoSnakes/settings.py	/^USE_I18N = True$/;"	kind:variable	line:135
+USE_L10N	../vaicoSnakes/vaicoSnakes/settings.py	/^USE_L10N = True$/;"	kind:variable	line:137
+USE_TZ	../vaicoSnakes/vaicoSnakes/settings.py	/^USE_TZ = True$/;"	kind:variable	line:139
+UsersConfig	../vaicoSnakes/users/apps.py	/^class UsersConfig(AppConfig):$/;"	kind:class	line:4
+WSGI_APPLICATION	../vaicoSnakes/vaicoSnakes/settings.py	/^WSGI_APPLICATION = 'vaicoSnakes.wsgi.application'$/;"	kind:variable	line:86
+__all__	../vaicoSnakes/vaicoSnakes/__init__.py	/^__all__ = ('celery_app',)/;"	kind:variable	line:7
+__init__	../vaicoSnakes/users/activities.py	/^    def __init__(self, input_shape, weight_path = 'rnn.h5'):$/;"	kind:member	line:9
+__init__	../vaicoSnakes/users/cnn.py	/^    def __init__(self, include_top = True, weights = 'imagenet', $/;"	kind:member	line:7
+__init__	../vaicoSnakes/users/rnn.py	/^    def __init__(self):$/;"	kind:member	line:12
+__init__.py	../vaicoSnakes/charts/__init__.py	1;"	kind:file	line:1
+__init__.py	../vaicoSnakes/charts/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	../vaicoSnakes/users/__init__.py	1;"	kind:file	line:1
+__init__.py	../vaicoSnakes/users/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	../vaicoSnakes/vaicoSnakes/__init__.py	1;"	kind:file	line:1
+__str__	../vaicoSnakes/users/models.py	/^    def __str__(self):$/;"	kind:member	line:18
+_act	../vaicoSnakes/users/_prueba.py	/^_act = Activities((10,1024))$/;"	kind:variable	line:29
+_act	../vaicoSnakes/users/views.py	/^_act = Activities((4,1024))$/;"	kind:variable	line:22
+_prueba.py	../vaicoSnakes/users/_prueba.py	1;"	kind:file	line:1
+_sorted	../vaicoSnakes/users/utilities.py	/^def _sorted(element):$/;"	kind:function	line:4
+activities	../vaicoSnakes/charts/models.py	/^    activities = models.CharField(blank=True, max_length=200, null = True)$/;"	kind:variable	line:8
+activities.py	../vaicoSnakes/users/activities.py	1;"	kind:file	line:1
+activity	../vaicoSnakes/users/prueba.py	/^activity = Activities((10,1024))$/;"	kind:variable	line:4
+admin.py	../vaicoSnakes/charts/admin.py	1;"	kind:file	line:1
+admin.py	../vaicoSnakes/users/admin.py	1;"	kind:file	line:1
+app	../vaicoSnakes/vaicoSnakes/celery.py	/^app = Celery('vaicoSnakes',broker='amqp:\/\/user1:user1@localhost')$/;"	kind:variable	line:12
+application	../vaicoSnakes/vaicoSnakes/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	../vaicoSnakes/charts/apps.py	1;"	kind:file	line:1
+apps.py	../vaicoSnakes/users/apps.py	1;"	kind:file	line:1
+arr	../vaicoSnakes/users/prueba.py	/^arr = np.random.rand( )/;"	kind:variable	line:5
+authentication_classes	../vaicoSnakes/charts/views.py	/^    authentication_classes = []$/;"	kind:variable	line:19
+blank	../vaicoSnakes/users/models.py	/^        blank=True,$/;"	kind:variable	line:11
+business	../vaicoSnakes/users/models.py	/^    business = models.CharField(blank=True,max_length=50, null = True)$/;"	kind:variable	line:6
+c	../vaicoSnakes/users/_prueba.py	/^c = yolo(os.path.join(dir, 'frames', ('img%d.png'%(0))), $/;"	kind:variable	line:27
+celery.py	../vaicoSnakes/vaicoSnakes/celery.py	1;"	kind:file	line:1
+chart	../vaicoSnakes/charts/views.py	/^def chart(request):$/;"	kind:function	line:8
+cnn.py	../vaicoSnakes/users/cnn.py	1;"	kind:file	line:1
+cnn_graph	../vaicoSnakes/users/views.py	/^cnn_graph = tf.get_default_graph() $/;"	kind:variable	line:20
+contact	../vaicoSnakes/vaicoSnakes/views.py	/^def contact(request):$/;"	kind:function	line:9
+convert_coordinates	../vaicoSnakes/users/utilities.py	/^def convert_coordinates(x,y,w,h):$/;"	kind:function	line:75
+created	../vaicoSnakes/charts/models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	kind:variable	line:10
+created	../vaicoSnakes/users/models.py	/^    created = models.DateTimeField(auto_now_add=True)$/;"	kind:variable	line:15
+dataGenerator	../vaicoSnakes/users/rnn.py	/^    def dataGenerator(self,pathes, batch_size, flag):$/;"	kind:member	line:56
+debug_task	../vaicoSnakes/vaicoSnakes/celery.py	/^def debug_task(self):$/;"	kind:function	line:21
+dependencies	../vaicoSnakes/charts/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:12
+dependencies	../vaicoSnakes/users/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:12
+dependencies	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^    dependencies = [$/;"	kind:variable	line:8
+dependencies	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	/^    dependencies = [$/;"	kind:variable	line:8
+describe	../vaicoSnakes/users/cnn.py	/^    def describe(self):$/;"	kind:member	line:27
+detector	../vaicoSnakes/users/_prueba.py	/^detector = ObjectDetection()$/;"	kind:variable	line:7
+detector	../vaicoSnakes/users/views.py	/^detector = ObjectDetection()$/;"	kind:variable	line:25
+dir	../vaicoSnakes/users/_prueba.py	/^dir = os.path.dirname(__file__)$/;"	kind:variable	line:25
+execution_path	../vaicoSnakes/users/_prueba.py	/^execution_path = os.getcwd()$/;"	kind:variable	line:6
+execution_path	../vaicoSnakes/users/views.py	/^execution_path = os.getcwd()$/;"	kind:variable	line:24
+extract_features	../vaicoSnakes/users/activities.py	/^    def extract_features(self, frame_seq, output_size = 1024, coordinates = None):$/;"	kind:member	line:32
+feed	../vaicoSnakes/users/views.py	/^def feed(request):$/;"	kind:function	line:43
+field	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^            field=models.CharField(blank=True, max_length=20, null=True),$/;"	kind:variable	line:16
+fields	../vaicoSnakes/charts/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:19
+fields	../vaicoSnakes/users/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:19
+frames	../vaicoSnakes/users/views.py	/^def frames(name,n=4):$/;"	kind:function	line:61
+frames.py	../vaicoSnakes/users/frames.py	1;"	kind:file	line:1
+frames2	../vaicoSnakes/users/tasks.py	/^def frames2():$/;"	kind:function	line:6
+get	../vaicoSnakes/charts/views.py	/^    def get(self, request, format=None):$/;"	kind:member	line:22
+get_Y_many_to_one	../vaicoSnakes/users/utilities.py	/^def get_Y_many_to_one(Y):$/;"	kind:function	line:56
+get_activity	../vaicoSnakes/users/rnn.py	/^    def get_activity(self, number, activities = None):$/;"	kind:member	line:33
+get_data	../vaicoSnakes/charts/views.py	/^def get_data(request):$/;"	kind:function	line:11
+get_dict	../vaicoSnakes/users/utilities.py	/^def get_dict(labels_path):$/;"	kind:function	line:25
+home	../vaicoSnakes/vaicoSnakes/views.py	/^def home(request):$/;"	kind:function	line:6
+initial	../vaicoSnakes/charts/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:10
+initial	../vaicoSnakes/users/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:10
+instances	../vaicoSnakes/charts/models.py	/^    instances = models.CharField(blank=True, max_length=200, null=True)$/;"	kind:variable	line:9
+join	../vaicoSnakes/users/utilities.py	/^def join(path, list_of_dir, label_path):$/;"	kind:function	line:18
+login_view	../vaicoSnakes/users/views.py	/^def login_view(request):$/;"	kind:function	line:30
+logout_view	../vaicoSnakes/users/views.py	/^def logout_view(request):$/;"	kind:function	line:100
+manage.py	../vaicoSnakes/manage.py	1;"	kind:file	line:1
+model_name	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^            model_name='profile',$/;"	kind:variable	line:14
+model_name	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	/^            model_name='profile',$/;"	kind:variable	line:14
+models.py	../vaicoSnakes/charts/models.py	1;"	kind:file	line:1
+models.py	../vaicoSnakes/users/models.py	1;"	kind:file	line:1
+modified	../vaicoSnakes/users/models.py	/^    modified = models.DateTimeField(auto_now=True)$/;"	kind:variable	line:16
+name	../vaicoSnakes/charts/apps.py	/^    name = 'charts'$/;"	kind:variable	line:5
+name	../vaicoSnakes/charts/migrations/0001_initial.py	/^            name='Result',$/;"	kind:variable	line:18
+name	../vaicoSnakes/users/apps.py	/^    name = 'users'$/;"	kind:variable	line:5
+name	../vaicoSnakes/users/migrations/0001_initial.py	/^            name='Profile',$/;"	kind:variable	line:18
+name	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^            name='biography',$/;"	kind:variable	line:15
+name	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	/^            name='biography',$/;"	kind:variable	line:15
+null	../vaicoSnakes/users/models.py	/^        null=True$/;"	kind:variable	line:12
+operations	../vaicoSnakes/charts/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:16
+operations	../vaicoSnakes/users/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:16
+operations	../vaicoSnakes/users/migrations/0002_profile_biography.py	/^    operations = [$/;"	kind:variable	line:12
+operations	../vaicoSnakes/users/migrations/0003_remove_profile_biography.py	/^    operations = [$/;"	kind:variable	line:12
+parse_Y	../vaicoSnakes/users/utilities.py	/^def parse_Y(Y):$/;"	kind:function	line:11
+permission_classes	../vaicoSnakes/charts/views.py	/^    permission_classes = []$/;"	kind:variable	line:20
+phone_number	../vaicoSnakes/users/models.py	/^    phone_number = models.CharField(max_length=20, blank=True, null=True)$/;"	kind:variable	line:7
+picture	../vaicoSnakes/users/models.py	/^    picture = models.ImageField($/;"	kind:variable	line:9
+predict	../vaicoSnakes/users/activities.py	/^    def predict(self, frames_seq, output_size = 1024 , coordinates = None):$/;"	kind:member	line:49
+predict	../vaicoSnakes/users/cnn.py	/^    def predict(self, array_of_examples):$/;"	kind:member	line:21
+predict	../vaicoSnakes/users/rnn.py	/^    def predict(self, X, activities = None):$/;"	kind:member	line:47
+predict_rnn	../vaicoSnakes/users/activities.py	/^    def predict_rnn(self, features):$/;"	kind:member	line:44
+print_hi	../vaicoSnakes/users/frames.py	/^def print_hi():$/;"	kind:function	line:4
+prueba.py	../vaicoSnakes/users/prueba.py	1;"	kind:file	line:1
+read	../vaicoSnakes/users/utilities.py	/^def read(path):$/;"	kind:function	line:69
+rnn.py	../vaicoSnakes/users/rnn.py	1;"	kind:file	line:1
+save	../vaicoSnakes/users/utilities.py	/^def save(X, Y, path):$/;"	kind:function	line:63
+services	../vaicoSnakes/vaicoSnakes/views.py	/^def services(request):$/;"	kind:function	line:12
+set_cnn	../vaicoSnakes/users/activities.py	/^    def set_cnn(self, model):$/;"	kind:member	line:26
+set_model	../vaicoSnakes/users/rnn.py	/^    def set_model(self,input_shape , model = None):$/;"	kind:member	line:16
+set_rnn	../vaicoSnakes/users/activities.py	/^    def set_rnn(self, model):$/;"	kind:member	line:21
+set_weights	../vaicoSnakes/users/rnn.py	/^    def set_weights(self, path_to_weights):$/;"	kind:member	line:30
+settings.py	../vaicoSnakes/vaicoSnakes/settings.py	1;"	kind:file	line:1
+t	../vaicoSnakes/users/_prueba.py	/^t = np.random.rand(1,10,224,224,3)$/;"	kind:variable	line:30
+tasks.py	../vaicoSnakes/users/tasks.py	1;"	kind:file	line:1
+tests.py	../vaicoSnakes/charts/tests.py	1;"	kind:file	line:1
+tests.py	../vaicoSnakes/users/tests.py	1;"	kind:file	line:1
+tracker	../vaicoSnakes/users/tracker_function.py	/^def tracker(frames, bboxes):$/;"	kind:function	line:5
+tracker_function.py	../vaicoSnakes/users/tracker_function.py	1;"	kind:file	line:1
+train	../vaicoSnakes/users/rnn.py	/^    def train(self,  train_pathes, ev_pathes , train_steps, val_steps,  epochs = 20,$/;"	kind:member	line:74
+upload_to	../vaicoSnakes/users/models.py	/^        upload_to="static\/img\/profile_pics", $/;"	kind:variable	line:10
+urlpatterns	../vaicoSnakes/vaicoSnakes/urls.py	/^urlpatterns = [$/;"	kind:variable	line:25
+urls.py	../vaicoSnakes/vaicoSnakes/urls.py	1;"	kind:file	line:1
+user	../vaicoSnakes/charts/models.py	/^    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)$/;"	kind:variable	line:7
+user	../vaicoSnakes/users/models.py	/^    user = models.OneToOneField(User, on_delete=models.CASCADE)$/;"	kind:variable	line:5
+utilities.py	../vaicoSnakes/users/utilities.py	1;"	kind:file	line:1
+verbose_name	../vaicoSnakes/users/apps.py	/^    verbose_name = 'Users'$/;"	kind:variable	line:6
+verbose_names	../vaicoSnakes/charts/apps.py	/^    verbose_names = 'charts'/;"	kind:variable	line:6
+views.py	../vaicoSnakes/charts/views.py	1;"	kind:file	line:1
+views.py	../vaicoSnakes/users/views.py	1;"	kind:file	line:1
+views.py	../vaicoSnakes/vaicoSnakes/vaicoSnakes/views.py	1;"	kind:file	line:1
+views.py	../vaicoSnakes/vaicoSnakes/views.py	1;"	kind:file	line:1
+which_image	../vaicoSnakes/users/utilities.py	/^def which_image(image_name):    $/;"	kind:function	line:7
+wsgi.py	../vaicoSnakes/vaicoSnakes/wsgi.py	1;"	kind:file	line:1
+yolo	../vaicoSnakes/users/_prueba.py	/^def yolo(input_path , output_path):$/;"	kind:function	line:12
+yolo	../vaicoSnakes/users/views.py	/^def yolo(input_path , output_path):$/;"	kind:function	line:116
+yolo_graph	../vaicoSnakes/users/views.py	/^yolo_graph = tf.get_default_graph() $/;"	kind:variable	line:19

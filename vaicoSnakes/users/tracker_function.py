@@ -6,6 +6,7 @@ def tracker(frames, bboxes):
     # Create MultiTracker object
     print(len(frames), len(bboxes))
     multiTracker = cv2.MultiTracker_create()
+    print(bboxes)
 
     # Initialize MultiTracker
     for bbox in bboxes:
@@ -20,10 +21,12 @@ def tracker(frames, bboxes):
 
         # draw tracked objects
         for i, newbox in enumerate(boxes):
+            
             crop_frame = frame[int(newbox[1]):int(
                 newbox[1] + newbox[3]), int(newbox[0]):int(newbox[0] + newbox[2])]
-            crop_frame = cv2.resize(crop_frame, (224, 224),
-                                    interpolation=cv2.INTER_AREA)
+ 
+            crop_frame = cv2.resize(crop_frame, (224, 224)) / 255.0
+
             video[i].append(crop_frame)
 
     return np.array(video)

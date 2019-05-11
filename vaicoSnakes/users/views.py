@@ -15,10 +15,11 @@ from users.tracker_function import tracker
 import tensorflow as tf
 from users.activities import Activities
 
-global graph
-graph = tf.get_default_graph() 
+global yolo_graph, cnn_graph
+yolo_graph = tf.get_default_graph() 
+cnn_graph = tf.get_default_graph() 
 
-_act = Activities((181,1024))
+_act = Activities((20,1024))
 
 execution_path = os.getcwd()
 detector = ObjectDetection()
@@ -38,7 +39,7 @@ def login_view(request):
             return render(request, 'users/login.html', {'error': 'Invalid username or password'})
     return render(request, 'users/login.html')
 
-@login_required
+#@login_required
 def feed(request):
     context = {}
     if request.method == "POST":
@@ -46,18 +47,19 @@ def feed(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
-        logged_in_user_posts = Result.objects.filter(user=request.user)
-        for b in logged_in_user_posts:
-            b.activities = b.activities.split(',')
-            b.instances = b.instances.split(',')
+        #logged_in_user_posts = Result.objects.filter(user=request.user)
+        #for b in logged_in_user_posts:
+            #b.activities = b.activities.split(',')
+            #b.instances = b.instances.split(',')
         #frames2.delay()
         frames(name)
-        return render(request, 'charts/posts.html', {'posts': logged_in_user_posts})
+        #return render(request, 'charts/posts.html', {'posts': logged_in_user_posts})
+        return render(request, 'users/feed.html')
     else:
         return render(request, 'users/feed.html')
 
 
-def frames(name,n=180):
+def frames(name,n=20):
     print('in')
     #print('../media/', name)
     #print(sys.path.append(os.path.realpath('../media/'+name)))
@@ -73,32 +75,26 @@ def frames(name,n=180):
     frame_step = 1
     _frames = []
     predictions = []
-    for i in range(0,int(cap.get(cv.CAP_PROP_FRAME_COUNT)  ),frame_step):
+    for i in range(1,int(cap.get(cv.CAP_PROP_FRAME_COUNT)  ),frame_step):
         print('entra')
         cap.set(1,i) # Where frame_no is the frame you want
         ret, frame = cap.read()
         cv.imwrite(os.path.join(dir, 'frames', ('img%d.png'%i)) , frame)
         _frames.append(frame)
-        if  i % n == 0 and i > 0:
-            coordinates = yolo(os.path.join(dir, 'frames', ('img%d.png'%(i - n))), 
-                               os.path.join(dir, 'yolo_output', ('img%d.png'%(i - n))))
+        if  i % n == 0:
+            coordinates = yolo(os.path.join(dir, 'frames', ('img%d.png'%(i - n + 1))), 
+                               os.path.join(dir, 'yolo_output', ('img%d.png'%(i - n + 1))))
             tracked_person = tracker(_frames , coordinates)
             print('tracked person: ', tracked_person, ' type: ', type(tracked_person))
             print('Shape', tracked_person.shape)
-            predictions.append(_act.predict(tracked_person))
+            with cnn_graph.as_default():
+                predictions.append(_act.predict(tracked_person))
             _frames = []
+        
+        if i == 61:
+            break
 
-
-
-def get_bounding_box(id_frame):
-    raise NotImplementedError     
-
-def tracking(first_frame, f):
-        raise NotImplementedError     
-
-def posts(request):
-    return (request, 'charts/posts.html')
-
+    print(predictions)
 
 
 @login_required
@@ -106,27 +102,17 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-"""
-def getDetector():
-    if instanced:
-        return detector
-    else:
-        execution_path = os.getcwd()
-        detector = ObjectDetection()
-        detector.setModelTypeAsYOLOv3()
-        detector.setModelPath( os.path.join(execution_path , "yolo.h5"))
-        detector.loadModel()
-"""
 
 def yolo(input_path , output_path):
     print('input path', input_path, '\noutput path ', output_path)
-    with graph.as_default():
+    with yolo_graph.as_default():
         detections = detector.detectObjectsFromImage(input_image= input_path, output_image_path=output_path, minimum_percentage_probability=30)
     coordinates = []
     for eachObject in detections:
         name = eachObject["name"]
         x1,y1,x2,y2 = eachObject["box_points"]
         if( name == "person"):
-            coordinates.append((x1,y1,x2,y2))
+            coordinates.append((x1,y1,x2-x1,y2-y1))
         
     return coordinates
+

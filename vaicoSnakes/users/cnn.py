@@ -1,17 +1,17 @@
-from tensorflow.keras.applications import MobileNet
-from tensorflow.keras.models import Model
-from tensorflow.python.keras import backend as K
+from keras.applications import MobileNet
+from keras.models import Model
+from keras import backend as K
 
 class CNNModel:
     
     def __init__(self, include_top = True, weights = 'imagenet', 
-                 model = None, transfer_layer = 'global_average_pooling2d'):
+                 model = None, transfer_layer = 'global_average_pooling2d_1'):
         
         self.model = model
         
         if self.model == None:
             self.model = MobileNet(include_top=include_top, weights=weights)            
-            
+        
         self._transfer_layer = self.model.get_layer(transfer_layer)
         self.transfer_model = Model(inputs=self.model.input,
                                     outputs=self._transfer_layer.output)

@@ -33,7 +33,6 @@ urlpatterns = [
     path('charts/', charts_views.chart, name='chart'),
     path('get_data/', charts_views.get_data, name='get_data'),
     path('chart_data/', charts_views.ChartData.as_view(), name='chart_data'),
-    path('posts/', users_views.posts),
     path('yolo/', users_views.yolo)
 
     #path('home/', views.home)
