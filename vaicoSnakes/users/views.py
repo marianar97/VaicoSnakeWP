@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+
 import asyncio
 import time
 from charts.models import Result
@@ -14,6 +15,11 @@ from imageai.Detection import ObjectDetection
 from users.tracker_function import tracker
 import tensorflow as tf
 from users.activities import Activities
+
+from datetime import timedelta
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 global yolo_graph, cnn_graph
 yolo_graph = tf.get_default_graph() 
@@ -89,12 +95,28 @@ def frames(name,n=20):
             print('Shape', tracked_person.shape)
             with cnn_graph.as_default():
                 predictions.append(_act.predict(tracked_person))
+            save_inf(_frames[0], predictions[-1], coordinates, os.path.join(dir, 'inf_output', ('img%d.png'%(i - n + 1))))
             _frames = []
-        
+
         if i == 61:
             break
 
+    graficar_acciones(os.path.join(dir, 'inf_output', ('graph1.png')) , predictions, n)
+    graficar_acciones_barra( os.path.join(dir, 'inf_output', ('graph2.png')) , predictions, n)
     print(predictions)
+
+def save_inf(frame, preds, coords, path):
+
+    for idx , pred in enumerate(preds):
+        x,y,w,h = coords[idx]
+        w = x + w
+        h = y + h
+        cv.rectangle(frame, (x, y), (w, h), (255,0,0), 2)
+        cv.putText(frame, pred , (x, y-7), cv.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255),thickness = 1, lineType=cv.LINE_AA)
+
+
+    cv.imwrite(path, frame)
+    
 
 
 @login_required
@@ -116,3 +138,40 @@ def yolo(input_path , output_path):
         
     return coordinates
 
+
+def graficar_acciones(path, acciones, intervalo, lista_acciones=['standing', 'laying', 'running', 'hugging', 'sitting']):
+    n_tiempos = len(acciones)
+    ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
+    dt = timedelta(seconds=intervalo)
+    tiempos = np.arange(0, n_tiempos) 
+    for t in range(n_tiempos):
+        for i, accion in enumerate(lista_acciones):
+            ocurrencia = acciones[t].count(accion)
+            ocurrencias[t, i] = ocurrencia
+    
+    for i in range(len(lista_acciones)):
+        plt.plot(tiempos, ocurrencias[:, i])
+    plt.legend(lista_acciones, loc='upper right')
+    plt.xticks(tiempos, tiempos*dt)
+    plt.yticks(tiempos)
+    plt.savefig(path) 
+    plt.clf()  
+
+def graficar_acciones_barra(path, acciones, intervalo, lista_acciones=['standing', 'laying', 'running', 'hugging', 'sitting']):
+    n_tiempos = len(acciones)
+    ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
+    dt = timedelta(seconds=intervalo)
+    tiempos = np.arange(0, n_tiempos) 
+    for t in range(n_tiempos):
+        for i, accion in enumerate(lista_acciones):
+            ocurrencia = acciones[t].count(accion)
+            ocurrencias[t, i] = ocurrencia
+    
+    w = 1 / (len(acciones) + 1)
+    for i in range(len(lista_acciones)):
+        plt.bar(tiempos + i*w, ocurrencias[:, i], width=w)
+    plt.legend(lista_acciones, loc='upper right')
+    plt.xticks(tiempos + (len(lista_acciones) - 1)/2 * w, tiempos*dt)
+    plt.yticks(tiempos)
+    plt.savefig(path)
+    plt.clf()
