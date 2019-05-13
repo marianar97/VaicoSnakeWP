@@ -20,6 +20,9 @@ from datetime import timedelta
 import numpy as np
 import matplotlib.pyplot as plt
 
+import random
+import string
+
 
 global yolo_graph, cnn_graph
 yolo_graph = tf.get_default_graph() 
@@ -58,11 +61,18 @@ def feed(request):
             #b.activities = b.activities.split(',')
             #b.instances = b.instances.split(',')
         #frames2.delay()
-        frames(name)
-        #return render(request, 'charts/posts.html', {'posts': logged_in_user_posts})
-        return render(request, 'users/feed.html')
+        #frames(name)
+        
+        images = frames(name)
+        
+        return render(request, 'charts/posts.html', {'posts' : images} )
+        #return render(request, 'users/feed.html')
     else:
         return render(request, 'users/feed.html')
+
+def get_links(users):
+    #Get images for user
+    NotImplementedError
 
 
 def frames(name,n=20):
@@ -81,29 +91,41 @@ def frames(name,n=20):
     frame_step = 1
     _frames = []
     predictions = []
+    images = []
+    img_name = randomStringDigits(10)
     for i in range(1,int(cap.get(cv.CAP_PROP_FRAME_COUNT)  ),frame_step):
         print('entra')
         cap.set(1,i) # Where frame_no is the frame you want
         ret, frame = cap.read()
-        cv.imwrite(os.path.join(dir, 'frames', ('img%d.png'%i)) , frame)
+        cv.imwrite(os.path.join(dir, 'frames', (img_name + 'img%d.png'%i)) , frame)
         _frames.append(frame)
         if  i % n == 0:
-            coordinates = yolo(os.path.join(dir, 'frames', ('img%d.png'%(i - n + 1))), 
-                               os.path.join(dir, 'yolo_output', ('img%d.png'%(i - n + 1))))
+            coordinates = yolo(os.path.join(dir, 'frames', (img_name + 'img%d.png'%(i - n + 1))), 
+                               os.path.join(dir, 'yolo_output', (img_name + 'img%d.png'%(i - n + 1))))
             tracked_person = tracker(_frames , coordinates)
             print('tracked person: ', tracked_person, ' type: ', type(tracked_person))
             print('Shape', tracked_person.shape)
             with cnn_graph.as_default():
                 predictions.append(_act.predict(tracked_person))
-            save_inf(_frames[0], predictions[-1], coordinates, os.path.join(dir, 'inf_output', ('img%d.png'%(i - n + 1))))
+            save_inf(_frames[0], predictions[-1], coordinates, os.path.join(dir, 'inf_output', (img_name +'img%d.png'%(i - n + 1))))
+            images.append(img_name +'img%d.png'%(i - n + 1))
             _frames = []
 
         if i == 61:
             break
-
-    graficar_acciones(os.path.join(dir, 'inf_output', ('graph1.png')) , predictions, n)
-    graficar_acciones_barra( os.path.join(dir, 'inf_output', ('graph2.png')) , predictions, n)
+    
+    images.append(img_name + 'graph1.png')
+    images.append(img_name + 'graph2.png')
+    graficar_acciones(os.path.join(dir, 'inf_output', (img_name + 'graph1.png')) , predictions, n)
+    graficar_acciones_barra( os.path.join(dir, 'inf_output', (img_name + 'graph2.png')) , predictions, n)
     print(predictions)
+    return images
+
+def randomStringDigits(stringLength=10):
+    """Generate a random string of letters and digits """
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
+
 
 def save_inf(frame, preds, coords, path):
 
