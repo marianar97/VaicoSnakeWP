@@ -19,22 +19,23 @@ from users.activities import Activities
 from datetime import timedelta
 import numpy as np
 import matplotlib.pyplot as plt
-
 import random
 import string
 
+from celery import task
 
 global yolo_graph, cnn_graph
-yolo_graph = tf.get_default_graph() 
-cnn_graph = tf.get_default_graph() 
+yolo_graph = tf.get_default_graph()
+cnn_graph = tf.get_default_graph()
 
-_act = Activities((20,1024))
+_act = Activities((20, 1024))
 
 execution_path = os.getcwd()
 detector = ObjectDetection()
 detector.setModelTypeAsYOLOv3()
-detector.setModelPath( os.path.join(execution_path , "yolo.h5"))
+detector.setModelPath(os.path.join(execution_path, "yolo.h5"))
 detector.loadModel()
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -42,13 +43,13 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user:
-            login(request,user)
+            login(request, user)
             return redirect('feed')
-        else: 
+        else:
             return render(request, 'users/login.html', {'error': 'Invalid username or password'})
     return render(request, 'users/login.html')
 
-#@login_required
+# @login_required
 def feed(request):
     context = {}
     if request.method == "POST":
@@ -63,10 +64,10 @@ def feed(request):
         #frames2.delay()
         #frames(name)
         
-        images = frames(name)
-        
-        return render(request, 'charts/posts.html', {'posts' : images} )
-        #return render(request, 'users/feed.html')
+        frames.delay(name)
+
+        # POST creando un registro que diga "Procesando..."
+        return render(request, 'users/feed.html')
     else:
         return render(request, 'users/feed.html')
 
@@ -74,15 +75,15 @@ def get_links(users):
     #Get images for user
     NotImplementedError
 
-
-def frames(name,n=20):
+@task(name="process_video")
+def frames(name, n=20):
     print('in')
     #print('../media/', name)
-    #print(sys.path.append(os.path.realpath('../media/'+name)))
-    
+    # print(sys.path.append(os.path.realpath('../media/'+name)))
+
     dir = os.path.dirname(__file__)
-    filename = os.path.join(dir, '..','media', name)
-    
+    filename = os.path.join(dir, '..', 'media', name)
+
     print(filename)
     cap = cv.VideoCapture(filename)
     print(cap)
@@ -95,7 +96,7 @@ def frames(name,n=20):
     img_name = randomStringDigits(10)
     for i in range(1,int(cap.get(cv.CAP_PROP_FRAME_COUNT)  ),frame_step):
         print('entra')
-        cap.set(1,i) # Where frame_no is the frame you want
+        cap.set(1, i)  # Where frame_no is the frame you want
         ret, frame = cap.read()
         cv.imwrite(os.path.join(dir, 'frames', (img_name + 'img%d.png'%i)) , frame)
         _frames.append(frame)
@@ -127,18 +128,18 @@ def randomStringDigits(stringLength=10):
     return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
 
+
 def save_inf(frame, preds, coords, path):
 
-    for idx , pred in enumerate(preds):
-        x,y,w,h = coords[idx]
+    for idx, pred in enumerate(preds):
+        x, y, w, h = coords[idx]
         w = x + w
         h = y + h
-        cv.rectangle(frame, (x, y), (w, h), (255,0,0), 2)
-        cv.putText(frame, pred , (x, y-7), cv.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255),thickness = 1, lineType=cv.LINE_AA)
-
+        cv.rectangle(frame, (x, y), (w, h), (255, 0, 0), 2)
+        cv.putText(frame, pred, (x, y-7), cv.FONT_HERSHEY_SIMPLEX,
+                   0.4, (255, 255, 255), thickness=1, lineType=cv.LINE_AA)
 
     cv.imwrite(path, frame)
-    
 
 
 @login_required
@@ -147,17 +148,18 @@ def logout_view(request):
     return redirect('home')
 
 
-def yolo(input_path , output_path):
+def yolo(input_path, output_path):
     print('input path', input_path, '\noutput path ', output_path)
     with yolo_graph.as_default():
-        detections = detector.detectObjectsFromImage(input_image= input_path, output_image_path=output_path, minimum_percentage_probability=30)
+        detections = detector.detectObjectsFromImage(
+            input_image=input_path, output_image_path=output_path, minimum_percentage_probability=30)
     coordinates = []
     for eachObject in detections:
         name = eachObject["name"]
-        x1,y1,x2,y2 = eachObject["box_points"]
-        if( name == "person"):
-            coordinates.append((x1,y1,x2-x1,y2-y1))
-        
+        x1, y1, x2, y2 = eachObject["box_points"]
+        if(name == "person"):
+            coordinates.append((x1, y1, x2-x1, y2-y1))
+
     return coordinates
 
 
@@ -165,30 +167,31 @@ def graficar_acciones(path, acciones, intervalo, lista_acciones=['standing', 'la
     n_tiempos = len(acciones)
     ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
     dt = timedelta(seconds=intervalo)
-    tiempos = np.arange(0, n_tiempos) 
+    tiempos = np.arange(0, n_tiempos)
     for t in range(n_tiempos):
         for i, accion in enumerate(lista_acciones):
             ocurrencia = acciones[t].count(accion)
             ocurrencias[t, i] = ocurrencia
-    
+
     for i in range(len(lista_acciones)):
         plt.plot(tiempos, ocurrencias[:, i])
     plt.legend(lista_acciones, loc='upper right')
     plt.xticks(tiempos, tiempos*dt)
     plt.yticks(tiempos)
-    plt.savefig(path) 
-    plt.clf()  
+    plt.savefig(path)
+    plt.clf()
+
 
 def graficar_acciones_barra(path, acciones, intervalo, lista_acciones=['standing', 'laying', 'running', 'hugging', 'sitting']):
     n_tiempos = len(acciones)
     ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
     dt = timedelta(seconds=intervalo)
-    tiempos = np.arange(0, n_tiempos) 
+    tiempos = np.arange(0, n_tiempos)
     for t in range(n_tiempos):
         for i, accion in enumerate(lista_acciones):
             ocurrencia = acciones[t].count(accion)
             ocurrencias[t, i] = ocurrencia
-    
+
     w = 1 / (len(acciones) + 1)
     for i in range(len(lista_acciones)):
         plt.bar(tiempos + i*w, ocurrencias[:, i], width=w)
