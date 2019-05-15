@@ -32,6 +32,8 @@ services:
   celery:
     build: vaicoSnakes
     command: celery -A vaicoSnakes worker -l info
+    environment:
+      - DATABASE_URL=postgres://postgres:docker@db:5432/my_awesome_project
     volumes:
       - ./vaicoSnakes:/code
     depends_on:
