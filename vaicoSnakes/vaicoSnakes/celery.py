@@ -9,7 +9,7 @@ from django.conf import settings  # noqa
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vaicoSnakes.settings')
 
-app = Celery('vaicoSnakes', broker='amqp://guest@localhost')
+app = Celery('vaicoSnakes', broker='amqp://guest@rabbitmq')
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
