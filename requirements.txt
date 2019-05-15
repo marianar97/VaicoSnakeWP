@@ -1,3 +1,4 @@
+gunicorn
 amqp==2.4.2
 anyjson==0.3.3
 billiard==3.6.0.0
@@ -17,3 +18,7 @@ redis==3.2.1
 sqlparse==0.2.4
 vine==5.0.0a1
 matplotlib
+https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.2/imageai-2.0.2-py3-none-any.whl
+tensorflow
+keras
+django-celery
