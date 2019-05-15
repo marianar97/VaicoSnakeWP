@@ -1,10 +1,11 @@
 from django.db import models
 from django.conf import settings
+from djongo import models
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
 class Result(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    activities = models.CharField(blank=True, max_length=200, null = True)
-    instances = models.CharField(blank=True, max_length=200, null=True)
+    images = ArrayField(models.CharField(max_length=10, blank=True),size=8)
     created = models.DateTimeField(auto_now_add=True)

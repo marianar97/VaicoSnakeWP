@@ -120,6 +120,7 @@ def frames(name, n=20):
     graficar_acciones(os.path.join(dir, 'inf_output', (img_name + 'graph1.png')) , predictions, n)
     graficar_acciones_barra( os.path.join(dir, 'inf_output', (img_name + 'graph2.png')) , predictions, n)
     print(predictions)
+    Result.objects.create(images =images )
     return images
 
 def randomStringDigits(stringLength=10):
