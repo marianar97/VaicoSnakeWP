@@ -3,31 +3,20 @@ from django.http import JsonResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from charts.models import Result
+
 
 # Create your views here.
-def chart(request):
-    return render(request, 'charts/chart.html')
-
-def get_data(request):
-    data = {
-        "caminando": 22,
-        "corriendo": 16,
-    }
-    return JsonResponse(data)
-
-class ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        labels = ["caminando", "corriendo", "sentados"]
-        default_data = [8,3,5]
-        
-        data = {
-            "labels": labels,
-            "default": default_data,
-            }
-        return Response(data)
+def charts(request):
+    logged_in_user_posts = Result.objects.filter(user=request.user.id)
+    print('user, ', request.user.id)
+    print('*' * 10)
+    for post in logged_in_user_posts:
+        print('images')
+        print(post.images)
+    print('logged in users ', logged_in_user_posts)
+    print('*' * 10)
+    return render(request, 'charts/chart.html',  {'posts' : logged_in_user_posts}  )
 
 
 

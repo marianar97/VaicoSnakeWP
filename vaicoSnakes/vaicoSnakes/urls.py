@@ -30,13 +30,12 @@ urlpatterns = [
     path('login/',users_views.login_view, name='login'),
     path('feed/', users_views.feed, name='feed'),
     path('logout_view/', users_views.logout_view, name='logout_view'),
-    path('charts/', charts_views.chart, name='chart'),
-    path('get_data/', charts_views.get_data, name='get_data'),
-    path('chart_data/', charts_views.ChartData.as_view(), name='chart_data'),
+    path('charts/', charts_views.charts, name='charts'),
     path('yolo/', users_views.yolo)
 
     #path('home/', views.home)
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

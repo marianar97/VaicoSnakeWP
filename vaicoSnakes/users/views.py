@@ -49,7 +49,7 @@ def login_view(request):
             return render(request, 'users/login.html', {'error': 'Invalid username or password'})
     return render(request, 'users/login.html')
 
-# @login_required
+@login_required
 def feed(request):
     context = {}
     if request.method == "POST":
@@ -64,7 +64,7 @@ def feed(request):
         #frames2.delay()
         #frames(name)
         
-        frames.delay(name)
+        frames.delay(request.user, name)
 
         # POST creando un registro que diga "Procesando..."
         return render(request, 'users/feed.html')
@@ -76,7 +76,7 @@ def get_links(users):
     NotImplementedError
 
 @task(name="process_video")
-def frames(name, n=20):
+def frames(user_id, name, n=20):
     print('in')
     #print('../media/', name)
     # print(sys.path.append(os.path.realpath('../media/'+name)))
@@ -120,7 +120,7 @@ def frames(name, n=20):
     graficar_acciones(os.path.join(dir, 'inf_output', (img_name + 'graph1.png')) , predictions, n)
     graficar_acciones_barra( os.path.join(dir, 'inf_output', (img_name + 'graph2.png')) , predictions, n)
     print(predictions)
-    Result.objects.create(images =images )
+    Result.objects.create(images =images, user = user_id)
     return images
 
 def randomStringDigits(stringLength=10):
