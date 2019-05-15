@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %} ">
@@ -58,7 +60,7 @@
                         </ul>
                         <ul class="navbar-nav ml-auto cta-btn">
                             <li class="nav-item">
-                                <a class="nav-link" href="https://www.youtube.com/watch?v=2kRN8DiAPhk" target=_blank>DEMO</a>
+                                <a class="nav-link" href="../logout_view">LOGOUT</a>
                                 </a>
                             </li>
                         </ul>
@@ -70,9 +72,13 @@
     </div>
 
     <div class="container">
-        <h5>Algunas imagenes y estadisticas del video</h5>
+        <h5 class="text-center">Detecciones y estadísticas</h5>
+        {%for post in posts %}
+        <div class="container">
+                <div class="row">
+                    <p class="text-center">{{post.created}}</p>
+              </div>
         <div class="row">
-            {%for post in posts %}
                 {%for image in post.images %}
             <div class="col-lg-4 col-md-12 mb-4">
 
