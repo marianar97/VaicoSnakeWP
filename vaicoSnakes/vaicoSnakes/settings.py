@@ -104,6 +104,7 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 
 CELERY_BROKER_URL = 'amqp://guest@rabbitmq'
+CELERY_TASK_SERIALIZER = 'pickle'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
