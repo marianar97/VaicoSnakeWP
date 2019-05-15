@@ -12,11 +12,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+import environ
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -38,18 +40,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #django apps
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #local apps
+    # local apps
     'charts',
     'users',
     'rest_framework',
-    'djcelery',
     'celery',
 ]
 
@@ -98,14 +99,11 @@ WSGI_APPLICATION = 'vaicoSnakes.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-   'default' : {
-      'ENGINE' : 'djongo',
-      'NAME' : 'vaico'
-   }
-}
+DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
-CELERY_BROKER_URL = 'amqp://localhost'
+
+CELERY_BROKER_URL = 'amqp://guest@rabbitmq'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -138,7 +136,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 
 # Static files (CSS, JavaScript, Images)

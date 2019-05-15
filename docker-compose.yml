@@ -1,37 +1,42 @@
-version: '2'
+version: '3'
+
 services:
-
-  django:
-    container_name: vaico-snakes
-    build:
-      context: .
-    networks:
-      - vaico-django-nginx
+  db:
+    image: postgres:9.6.5
     volumes:
-      - vaico-django-static:/usr/src/app/vaicoSnakes/static
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=my_awesome_project
+  rabbitmq:
+    image: rabbitmq:3
     ports:
-      - 8000:8000
-
-  nginx:
-    container_name: vaico-nginx
-    build:
-      context: ./nginx
-      dockerfile: nginx.dockerfile
-    networks:
-      - vaico-django-nginx
+      - "15672:15672"
+      - "5672:5672"
+      
+  web:
+    build: vaicoSnakes
+    command: bash -c "echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')" | python manage.py shell && python /code/manage.py makemigrations && python /code/manage.py migrate && python /code/manage.py runserver 0.0.0.0:8000"
     volumes:
-      - vaico-django-static:/usr/src/app/static
-      - vaico-nginx-cert:/etc/ssl/certs:ro
+      - ./vaicoSnakes:/code
+    environment:
+      - DATABASE_URL=postgres://postgres:docker@db:5432/my_awesome_project
     ports:
-      - 80:80
-      - 443:443
+      - "8000:8000"
+    links:
+      - db
     depends_on:
-      - django
+      - db
+      - rabbitmq
+      
+  celery:
+    build: vaicoSnakes
+    command: celery -A vaicoSnakes worker -l info
+    volumes:
+      - ./vaicoSnakes:/code
+    depends_on:
+      - db
+      - rabbitmq
 
 volumes:
-  vaico-django-static:
-  vaico-nginx-cert:
-      
-networks:
-  vaico-django-nginx:
-    driver: bridge
+  postgres_data:
