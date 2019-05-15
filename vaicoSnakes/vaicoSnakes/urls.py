@@ -31,8 +31,8 @@ urlpatterns = [
     path('feed/', users_views.feed, name='feed'),
     path('logout_view/', users_views.logout_view, name='logout_view'),
     path('charts/', charts_views.charts, name='charts'),
-    path('yolo/', users_views.yolo)
-
+    path('yolo/', users_views.yolo),
+    path('loading', charts_views.loading, name='loading')
     #path('home/', views.home)
 ]
 

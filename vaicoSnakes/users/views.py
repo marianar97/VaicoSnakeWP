@@ -67,7 +67,7 @@ def feed(request):
         frames.delay(request.user, name)
 
         # POST creando un registro que diga "Procesando..."
-        return render(request, 'users/feed.html')
+        return render(request, 'charts/loading.html')
     else:
         return render(request, 'users/feed.html')
 

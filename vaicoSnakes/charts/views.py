@@ -18,5 +18,6 @@ def charts(request):
     print('*' * 10)
     return render(request, 'charts/chart.html',  {'posts' : logged_in_user_posts}  )
 
-
+def loading(request):
+    return render(request, 'charts/loading.html')
 
