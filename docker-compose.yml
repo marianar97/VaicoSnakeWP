@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  db:
-    image: postgres:9.6.5
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=my_awesome_project
   rabbitmq:
     image: rabbitmq:3
     ports:
@@ -16,29 +9,22 @@ services:
       
   web:
     build: vaicoSnakes
-    command: bash -c "echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')\" | python manage.py shell && python /code/manage.py makemigrations && python /code/manage.py migrate && python /code/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python /code/manage.py makemigrations && python /code/manage.py migrate && python /code/manage.py runserver 0.0.0.0:80"
     volumes:
       - ./vaicoSnakes:/code
     environment:
-      - DATABASE_URL=postgres://postgres:docker@db:5432/my_awesome_project
+      - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     ports:
-      - "8000:8000"
-    links:
-      - db
+      - "80:80"
     depends_on:
-      - db
       - rabbitmq
       
   celery:
     build: vaicoSnakes
     command: celery -A vaicoSnakes worker -l info
     environment:
-      - DATABASE_URL=postgres://postgres:docker@db:5432/my_awesome_project
+      - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     volumes:
       - ./vaicoSnakes:/code
     depends_on:
-      - db
       - rabbitmq
-
-volumes:
-  postgres_data:
