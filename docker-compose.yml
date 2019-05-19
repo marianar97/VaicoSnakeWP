@@ -3,28 +3,61 @@ version: '3'
 services:
   rabbitmq:
     image: rabbitmq:3
+    networks:
+      - main
     ports:
       - "15672:15672"
       - "5672:5672"
       
   web:
     build: vaicoSnakes
-    command: bash -c "python /code/manage.py makemigrations && python /code/manage.py migrate && python /code/manage.py runserver 0.0.0.0:80"
+    networks:
+      - main
     volumes:
       - ./vaicoSnakes:/code
+      - vaico-static:/code/static
+      - vaico-media:/code/media
     environment:
       - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - rabbitmq
       
+
+  nginx:
+    container_name: vaico-nginx
+    build:
+      context: ./nginx
+      dockerfile: nginx.dockerfile
+    networks:
+      - main
+    volumes:
+      - vaico-static:/code/static
+      - vaico-media:/code/media
+      - nginx-certs:/etc/ssl/certs:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - web
+
   celery:
     build: vaicoSnakes
     command: celery -A vaicoSnakes worker -l info
+    networks:
+      - main
     environment:
       - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     volumes:
       - ./vaicoSnakes:/code
     depends_on:
       - rabbitmq
+
+volumes:
+  vaico-static:
+  vaico-media:
+  nginx-certs:
+
+networks:
+  main:

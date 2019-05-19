@@ -22,3 +22,4 @@ keras
 mongoengine
 django-environ
 psycopg2==2.8 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
+gunicorn
