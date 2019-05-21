@@ -17,6 +17,7 @@ services:
       - ./vaicoSnakes:/code
       - vaico-static:/code/static
       - vaico-media:/code/media
+      - model-media:/usr/media
     environment:
       - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     ports:
@@ -51,6 +52,8 @@ services:
       - DATABASE_URL=postgres://vaico@52.23.246.162:5432/vaicodb
     volumes:
       - ./vaicoSnakes:/code
+      - model-media:/usr/media
+      - vaico-media:/code/media
     depends_on:
       - rabbitmq
 
@@ -58,6 +61,7 @@ volumes:
   vaico-static:
   vaico-media:
   nginx-certs:
+  model-media:
 
 networks:
   main:

@@ -9,6 +9,7 @@ djongo==1.2.30
 kombu==4.5.0
 numpy==1.16.3
 opencv-python==4.1.0.25
+opencv-contrib-python==4.1.0.25
 Pillow==6.0.0
 pymongo==3.8
 pytz==2019.1

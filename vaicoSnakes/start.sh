@@ -8,8 +8,12 @@ echo "Collecting and compiling statics"
 python manage.py collectstatic --noinput
 echo "Making migrations"
 python manage.py makemigrations
+python manage.py makemigrations charts
+python manage.py makemigrations users
 echo "Migrating"
 python manage.py migrate
+python manage.py migrate charts
+python manage.py migrate users
 
 # Difference from article
 # CD to project as per comment above

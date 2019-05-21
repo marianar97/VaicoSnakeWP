@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.models import User
 
 import asyncio
 import time
@@ -19,23 +20,36 @@ from users.activities import Activities
 from datetime import timedelta
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import matplotlib as mpl
+import matplotlib.patches as mpatches
+
 import random
 import string
 
 from celery import task
+from celery.signals import worker_init, worker_process_init
 
-global yolo_graph, cnn_graph
-yolo_graph = tf.get_default_graph()
-cnn_graph = tf.get_default_graph()
+yolo_graph = None
+cnn_graph = None
+detector = None
+_act = None
 
-_act = Activities((20, 1024))
+@worker_process_init.connect()
+def on_worker_init(**_):
 
-execution_path = os.getcwd()
-detector = ObjectDetection()
-detector.setModelTypeAsYOLOv3()
-detector.setModelPath(os.path.join(execution_path, "yolo.h5"))
-detector.loadModel()
+    global yolo_graph , cnn_graph, detector, _act
 
+    yolo_graph = tf.get_default_graph()
+    cnn_graph = tf.get_default_graph()
+
+    _act = Activities((20, 1024))
+
+    execution_path = os.getcwd()
+    detector = ObjectDetection()
+    detector.setModelTypeAsYOLOv3()
+    detector.setModelPath(os.path.join(execution_path, "yolo.h5"))
+    detector.loadModel()
 
 def login_view(request):
     if request.method == 'POST':
@@ -54,7 +68,7 @@ def feed(request):
     context = {}
     if request.method == "POST":
         uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
+        fs = FileSystemStorage('/code/media/' + str(request.user.id))
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
         #logged_in_user_posts = Result.objects.filter(user=request.user)
@@ -64,7 +78,7 @@ def feed(request):
         #frames2.delay()
         #frames(name)
         
-        frames.delay(request.user, name)
+        frames.delay(request.user.id, name)
 
         # POST creando un registro que diga "Procesando..."
         return render(request, 'charts/loading.html')
@@ -77,51 +91,56 @@ def get_links(users):
 
 @task(name="process_video")
 def frames(user_id, name, n=20):
-    print('in')
     #print('../media/', name)
     # print(sys.path.append(os.path.realpath('../media/'+name)))
 
-    dir = os.path.dirname(__file__)
-    filename = os.path.join(dir, '..', 'media', name)
+    dir = '/code/media/' + str(user_id)
+    inf_dir = os.path.join(dir,'inf_output')
+    frames_dir = os.path.join(dir, 'frames')
+    yolo_output_dir = os.path.join(dir, 'yolo_output')
 
-    print(filename)
+    if not os.path.exists(inf_dir):
+        os.makedirs(inf_dir)
+
+    if not os.path.exists(frames_dir):
+        os.makedirs(frames_dir)
+
+    if not os.path.exists(yolo_output_dir):
+        os.makedirs(yolo_output_dir)
+
+    filename = os.path.join(dir, name)
     cap = cv.VideoCapture(filename)
-    print(cap)
     amount_of_frames = cap.get(cv.CAP_PROP_FRAME_COUNT)
-    print(amount_of_frames)
     frame_step = 1
     _frames = []
     predictions = []
     images = []
-    img_name = randomStringDigits(10)
+    img_name = randomStringDigits(6)
     for i in range(1,int(cap.get(cv.CAP_PROP_FRAME_COUNT)  ),frame_step):
-        print('entra')
         cap.set(1, i)  # Where frame_no is the frame you want
         ret, frame = cap.read()
-        cv.imwrite(os.path.join(dir, 'frames', (img_name + 'img%d.png'%i)) , frame)
+        cv.imwrite(os.path.join(frames_dir, (img_name + 'img%d.png'%i)) , frame)
         _frames.append(frame)
         if  i % n == 0:
-            coordinates = yolo(os.path.join(dir, 'frames', (img_name + 'img%d.png'%(i - n + 1))), 
-                               os.path.join(dir, 'yolo_output', (img_name + 'img%d.png'%(i - n + 1))))
+            coordinates = yolo(os.path.join(frames_dir, (img_name + 'img%d.png'%(i - n + 1))), 
+                               os.path.join(yolo_output_dir, (img_name + 'img%d.png'%(i - n + 1))))
             tracked_person = tracker(_frames , coordinates)
-            print('tracked person: ', tracked_person, ' type: ', type(tracked_person))
-            print('Shape', tracked_person.shape)
             with cnn_graph.as_default():
                 predictions.append(_act.predict(tracked_person))
-            save_inf(_frames[0], predictions[-1], coordinates, os.path.join(dir, 'inf_output', (img_name +'img%d.png'%(i - n + 1))))
-            images.append(img_name +'img%d.png'%(i - n + 1))
+            save_inf(_frames[0], predictions[-1], coordinates, os.path.join(inf_dir, (img_name +'img%d.png'%(i - n + 1))))
+            images.append(os.path.join('/media', str(user_id), 'inf_output', img_name +'img%d.png'%(i - n + 1)))
             _frames = []
 
         if i == 61:
             break
     
-    images.append(img_name + 'graph1.png')
-    images.append(img_name + 'graph2.png')
-    graficar_acciones(os.path.join(dir, 'inf_output', (img_name + 'graph1.png')) , predictions, n)
-    graficar_acciones_barra( os.path.join(dir, 'inf_output', (img_name + 'graph2.png')) , predictions, n)
-    print(predictions)
-    Result.objects.create(images =images, user = user_id)
-    return images
+    images.append(os.path.join('/media', str(user_id), 'inf_output', img_name + 'graph1.png'))
+    images.append(os.path.join('/media', str(user_id), 'inf_output', img_name + 'graph2.png'))
+    os.remove(filename)
+    graficar_acciones(os.path.join(inf_dir, (img_name + 'graph1.png')) , predictions, n)
+    graficar_acciones_barra( os.path.join(inf_dir, (img_name + 'graph2.png')) , predictions, n)
+    user = User.objects.get(id=user_id)
+    Result.objects.create(images =images, user = user)
 
 def randomStringDigits(stringLength=10):
     """Generate a random string of letters and digits """
@@ -165,17 +184,25 @@ def yolo(input_path, output_path):
 
 
 def graficar_acciones(path, acciones, intervalo, lista_acciones=['standing', 'laying', 'running', 'hugging', 'sitting']):
+    total_acciones = len(lista_acciones)
     n_tiempos = len(acciones)
     ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
     dt = timedelta(seconds=intervalo)
-    tiempos = np.arange(0, n_tiempos)
+    tiempos = np.arange(0, n_tiempos) 
+    
+    colores = .25 * np.ones((total_acciones, 4))
+    n_lista_acciones = np.arange(0, total_acciones)
+    norm = mpl.colors.Normalize(vmin=0, vmax=total_acciones)
+    c = cm.ScalarMappable(cmap=cm.gist_rainbow, norm=norm)
+    colores = c.to_rgba(n_lista_acciones)
+    
     for t in range(n_tiempos):
         for i, accion in enumerate(lista_acciones):
             ocurrencia = acciones[t].count(accion)
             ocurrencias[t, i] = ocurrencia
-
+    
     for i in range(len(lista_acciones)):
-        plt.plot(tiempos, ocurrencias[:, i])
+        plt.plot(tiempos, ocurrencias[:, i], color=colores[i])
     plt.legend(lista_acciones, loc='upper right')
     plt.xticks(tiempos, tiempos*dt)
     plt.yticks(tiempos)
@@ -184,20 +211,43 @@ def graficar_acciones(path, acciones, intervalo, lista_acciones=['standing', 'la
 
 
 def graficar_acciones_barra(path, acciones, intervalo, lista_acciones=['standing', 'laying', 'running', 'hugging', 'sitting']):
-    n_tiempos = len(acciones)
+    total_acciones = len(lista_acciones)
+    n_tiempos = len(acciones) 
     ocurrencias = np.zeros((n_tiempos, len(lista_acciones))).astype(np.int32)
     dt = timedelta(seconds=intervalo)
-    tiempos = np.arange(0, n_tiempos)
+    tiempos = np.arange(0, n_tiempos + 1) 
+    
     for t in range(n_tiempos):
         for i, accion in enumerate(lista_acciones):
             ocurrencia = acciones[t].count(accion)
             ocurrencias[t, i] = ocurrencia
-
-    w = 1 / (len(acciones) + 1)
-    for i in range(len(lista_acciones)):
-        plt.bar(tiempos + i*w, ocurrencias[:, i], width=w)
-    plt.legend(lista_acciones, loc='upper right')
-    plt.xticks(tiempos + (len(lista_acciones) - 1)/2 * w, tiempos*dt)
+    
+    epsilon = 2
+    w = 1 / (len(acciones) + epsilon)
+    posiciones = tiempos + (len(lista_acciones) + epsilon)/2 * w
+    
+    colores = .25 * np.ones((total_acciones, 4))
+    n_lista_acciones = np.arange(0, total_acciones)
+    norm = mpl.colors.Normalize(vmin=0, vmax=total_acciones)
+    c = cm.ScalarMappable(cmap=cm.gist_rainbow, norm=norm)
+    colores = c.to_rgba(n_lista_acciones)
+    
+    
+    for i in range(n_tiempos):
+        no_cero = np.array([[x, n] for x, n in enumerate(ocurrencias[i,:]) if n > 0])
+        ocurrencias_acciones = no_cero[:,1]
+        indices_acciones = no_cero[:,0]
+        colores_grafica = colores[indices_acciones]
+        pos = np.arange(0, len(ocurrencias_acciones)*w, w)[:len(ocurrencias_acciones)]
+        desplazamiento = posiciones[i] - (pos[-1] - pos[0]) / 2
+        pos = pos + desplazamiento
+        plt.bar(pos, ocurrencias_acciones, width=w, color=colores_grafica)
+        
+    handles = []
+    for n_accion in n_lista_acciones:
+        handles.append(mpatches.Patch(color=colores[n_accion], label=lista_acciones[n_accion]))
+    plt.legend(handles=handles, loc='best')
+    plt.xticks(posiciones , tiempos*dt)
     plt.yticks(tiempos)
     plt.savefig(path)
     plt.clf()
